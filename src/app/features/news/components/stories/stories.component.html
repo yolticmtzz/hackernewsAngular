@@ -1,0 +1,35 @@
+<div class="stories-container">
+    <h2>Newest Hacker News Stories</h2>
+
+    <div>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Search stories" 
+        (ngModelChange)="searchStories()"
+      />
+    </div>
+
+    <ul *ngIf="filteredStories.length > 0">
+      <li *ngFor="let story of filteredStories">
+        <a *ngIf="story.url; else noLink" [href]="story.url" target="_blank" rel="noopener noreferrer">
+          {{ story.title }}
+        </a>
+        <ng-template #noLink>
+          <span class="no-link">{{ story.title }} (No link available)</span>
+        </ng-template>
+      </li>
+    </ul>
+    
+    <div *ngIf="filteredStories.length === 0">
+      <p>No stories available at the moment.</p>
+    </div>
+  
+    
+    <div class="pagination-controls">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }}</span>
+      <button (click)="nextPage()">Next</button>
+    </div>
+  </div>
+  
